@@ -8,7 +8,9 @@ import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.NoDataAnimation
 
 @Component
 public class UsersScreen {
-    let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    
+    @State var refreshTick: Int64 = 0
+let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     @State var userCount: Int64 = 0
     @State var pendingDeleteIndex: Int64 = -1
     @State var expandedIndex: Int64 = -1
@@ -20,8 +22,36 @@ public class UsersScreen {
         }
     }
 
+
+private func toggleFavorite(index: Int64): Unit {
+        let userId = RoomDbContext.userIdAt(index)
+        let currentFavorite = RoomDbContext.userIsFavoriteAt(index)
+
+        if (userId != "" && RoomDbContext.updateFavorite(userId, !currentFavorite)) {
+            refreshUsers()
+            refreshTick += 1
+        } else {
+        }
+    }
+
+private func removeUser(index: Int64): Unit {
+        let userId = RoomDbContext.userIdAt(index)
+
+        if (userId != "" && RoomDbContext.deleteUser(userId)) {
+            refreshUsers()
+            refreshTick += 1
+            expandedIndex = -1
+            pendingDeleteIndex = -1
+        } else {
+        }
+    }
     func build() {
         Column(space: 12) {
+            // __refreshTickUiDependency__: make refreshTick participate in the UI dependency graph.
+            Text("${refreshTick}")
+                .fontSize(1)
+                .height(1)
+                .fontColor(0x00FFFFFF)
             if (userCount == 0) {
                 Column(space: 12) {
                     NoDataAnimation()
@@ -72,8 +102,7 @@ public class UsersScreen {
                                                 .alignItems(VerticalAlign.Center)
                                                 .borderRadius(16)
                                                 .onClick({ _ =>
-                                                    RoomDbContext.toggleFavoriteAt(item)
-                                                    refreshUsers()
+                                                    toggleFavorite(item)
                                                 })
 
                                                 Row() {
@@ -85,7 +114,7 @@ public class UsersScreen {
                                                 .alignItems(VerticalAlign.Center)
                                                 .borderRadius(16)
                                                 .onClick({ _ =>
-                                                    pendingDeleteIndex = item
+                                                    removeUser(item)
                                                 })
                                             }
                                             .margin(right: 8)
@@ -128,9 +157,7 @@ public class UsersScreen {
                             .backgroundColor(0xFFDC2626)
                             .fontColor(Color.White)
                             .onClick({ _ =>
-                                RoomDbContext.deleteUserAt(pendingDeleteIndex)
-                                pendingDeleteIndex = -1
-                                refreshUsers()
+                                removeUser(pendingDeleteIndex)
                             })
                         Button("Cancel", ButtonOptions(shape: ButtonType.Normal))
                             .onClick({ _ =>
@@ -150,6 +177,7 @@ public class UsersScreen {
         .backgroundColor(0xFFF9FAFB)
         .onAppear({ =>
             refreshUsers()
+            refreshTick += 1
         })
     }
 }

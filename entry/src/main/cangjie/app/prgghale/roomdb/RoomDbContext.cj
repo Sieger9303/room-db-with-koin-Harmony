@@ -196,6 +196,22 @@ public class RoomDbContext {
         return favoriteUsers().size
     }
 
+    public static func favoriteUserIdAt(index: Int64): String {
+        let users = favoriteUsers()
+        if (index >= 0 && index < users.size) {
+            return users[index].id
+        }
+        return ""
+    }
+
+    public static func unfavoriteAt(index: Int64): Bool {
+        let userId = favoriteUserIdAt(index)
+        if (userId != "") {
+            return updateFavorite(userId, false)
+        }
+        return false
+    }
+
     public static func favoriteUserTitleAt(index: Int64): String {
         let users = favoriteUsers()
         if (index >= 0 && index < users.size) {

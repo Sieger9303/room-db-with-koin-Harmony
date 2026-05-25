@@ -8,15 +8,31 @@ import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.NoDataAnimation
 
 @Component
 public class FavoriteScreen {
-    let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    
+    @State var refreshTick: Int64 = 0
+let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     @State var favoriteCount: Int64 = 0
 
     private func refreshFavorites(): Unit {
         favoriteCount = RoomDbContext.favoriteUserCount()
     }
 
+    private func unfavorite(index: Int64): Unit {
+        if (RoomDbContext.unfavoriteAt(index)) {
+            refreshFavorites()
+            refreshTick += 1
+        } else {
+        }
+    }
+
+
     func build() {
         Column(space: 12) {
+            // __refreshTickUiDependency__: make refreshTick participate in the UI dependency graph.
+            Text("${refreshTick}")
+                .fontSize(1)
+                .height(1)
+                .fontColor(0x00FFFFFF)
             if (favoriteCount == 0) {
                 Column(space: 12) {
                     NoDataAnimation()
@@ -46,7 +62,9 @@ public class FavoriteScreen {
 
                                         Row() {
                                             Image(@r(app.media.ic_star)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFFF59E0B))
-                                        }.width(28).height(28).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
+                                        }.width(28).height(28).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center).onClick({ _ =>
+                                                unfavorite(item)
+                                            })
 
                                         Row() {
                                             Image(@r(app.media.ic_chevron_right)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFF6B7280))
@@ -70,6 +88,7 @@ public class FavoriteScreen {
         .backgroundColor(0xFFF9FAFB)
         .onAppear({ =>
             refreshFavorites()
+            refreshTick += 1
         })
     }
 }

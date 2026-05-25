@@ -5,6 +5,7 @@ import kit.AbilityKit.UIAbility
 import kit.AbilityKit.Want
 import kit.ArkUI.WindowStage
 import kit.PerformanceAnalysisKit.Hilog
+import ohos_app_cangjie_entry.app.prgghale.roomdb.data.database.AppDatabase
 
 class MainAbility <: UIAbility {
     public init() {
@@ -13,6 +14,7 @@ class MainAbility <: UIAbility {
     }
 
     public override func onCreate(want: Want, launchParam: LaunchParam): Unit {
+        AppDatabase.configureContext(this.context)
         Hilog.info(1, "RoomDb", "MainAbility onCreate")
     }
 
