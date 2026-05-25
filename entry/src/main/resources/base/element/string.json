@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "Room DB"
+    },
+    {
+      "name": "module_desc",
+      "value": "Room DB Harmony module"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Room DB entry ability"
+    }
+  ]
+}

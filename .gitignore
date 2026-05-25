@@ -1,0 +1,5 @@
+.hvigor/
+local.properties
+build/
+entry/build/
+entry/.preview/

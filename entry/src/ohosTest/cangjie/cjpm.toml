@@ -1,0 +1,6 @@
+[package]
+  name = "ohos_app_cangjie_entry_test"
+  version = "1.0.0"
+  cjc-version = "0.48.2"
+  output-type = "dynamic"
+  src-dir = "."

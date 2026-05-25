@@ -1,0 +1,29 @@
+{
+  "Modules": {
+    "entry": {
+      "deviceSysCap": {
+        "phone": [
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone-hmos.json",
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone.json"
+        ]
+      }
+    },
+    "entry_test": {
+      "deviceSysCap": {
+        "phone": [
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone-hmos.json",
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone.json"
+        ]
+      }
+    },
+    "entry_local_test": {
+      "deviceSysCap": {
+        "phone": [
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone-hmos.json",
+          "D:\\Deveco\\Software\\DevEco Studio\\sdk\\default\\hms\\ets\\api\\device-define\\phone.json"
+        ]
+      }
+    }
+  },
+  "apiLevel": 22
+}
