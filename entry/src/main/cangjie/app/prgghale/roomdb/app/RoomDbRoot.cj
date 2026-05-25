@@ -8,7 +8,10 @@ import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.BottomNavItems
 import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.bottomNavLabel
 import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.searchLabel
 import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.AppScaffold
+import ohos_app_cangjie_entry.app.prgghale.roomdb.ui.favorite.FavoriteScreen
 import ohos_app_cangjie_entry.app.prgghale.roomdb.ui.home.HomeScreen
+import ohos_app_cangjie_entry.app.prgghale.roomdb.ui.profile.ProfileScreen
+import ohos_app_cangjie_entry.app.prgghale.roomdb.ui.search.SearchScreen
 import ohos_app_cangjie_entry.app.prgghale.roomdb.ui.userlist.UsersScreen
 
 @Component
@@ -29,29 +32,11 @@ public class RoomDbRoot {
             if (currentRoute == bottomNavLabel(BottomNavItems.Home)) {
                 HomeScreen()
             } else if (currentRoute == searchLabel()) {
-                Column(space: 12) {
-                    Text(searchLabel())
-                        .fontSize(22)
-                        .fontWeight(FontWeight.Bold)
-                    Text("Translated screen batch pending")
-                        .fontSize(14)
-                }
-                .padding(left: 24, right: 24, top: 32, bottom: 24)
-                .width(100.percent)
-                .layoutWeight(1)
+                SearchScreen()
             } else if (currentRoute == bottomNavLabel(BottomNavItems.Bookings)) {
                 UsersScreen()
             } else if (currentRoute == bottomNavLabel(BottomNavItems.Favorite)) {
-                Column(space: 12) {
-                    Text(bottomNavLabel(BottomNavItems.Favorite))
-                        .fontSize(22)
-                        .fontWeight(FontWeight.Bold)
-                    Text("Translated screen batch pending")
-                        .fontSize(14)
-                }
-                .padding(left: 24, right: 24, top: 32, bottom: 24)
-                .width(100.percent)
-                .layoutWeight(1)
+                FavoriteScreen()
             } else if (currentRoute == bottomNavLabel(BottomNavItems.Loading)) {
                 Column(space: 12) {
                     Text(bottomNavLabel(BottomNavItems.Loading))
@@ -64,16 +49,7 @@ public class RoomDbRoot {
                 .width(100.percent)
                 .layoutWeight(1)
             } else {
-                Column(space: 12) {
-                    Text(bottomNavLabel(BottomNavItems.Profile))
-                        .fontSize(22)
-                        .fontWeight(FontWeight.Bold)
-                    Text("Translated screen batch pending")
-                        .fontSize(14)
-                }
-                .padding(left: 24, right: 24, top: 32, bottom: 24)
-                .width(100.percent)
-                .layoutWeight(1)
+                ProfileScreen()
             }
 
             BottomBar()

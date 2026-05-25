@@ -114,4 +114,67 @@ public class RoomDbContext {
                 return ArrayList<UserTable>()
         }
     }
+
+    public static func userProfessionCount(): Int64 {
+        return userProfession().size
+    }
+
+    public static func userTitleAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return users[index].user.displayName()
+        }
+        return ""
+    }
+
+    public static func userProfessionNameAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return users[index].profession.professionName
+        }
+        return ""
+    }
+
+    public static func userAddressAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return users[index].user.address
+        }
+        return ""
+    }
+
+    public static func userFavoriteLabelAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return if (users[index].user.isFavorite) { "Favorite" } else { "Not favorite" }
+        }
+        return ""
+    }
+
+    public static func favoriteUserCount(): Int64 {
+        return favoriteUsers().size
+    }
+
+    public static func favoriteUserTitleAt(index: Int64): String {
+        let users = favoriteUsers()
+        if (index >= 0 && index < users.size) {
+            return users[index].displayName()
+        }
+        return ""
+    }
+
+    public static func searchCount(query: String): Int64 {
+        let users = userProfession()
+        if (query == "") {
+            return users.size
+        }
+
+        var count: Int64 = 0
+        for (item in users) {
+            if (item.user.firstName.contains(query)) {
+                count += 1
+            }
+        }
+        return count
+    }
 }
