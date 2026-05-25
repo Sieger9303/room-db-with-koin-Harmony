@@ -1,5 +1,6 @@
 package ohos_app_cangjie_entry.app.prgghale.roomdb.data.database
 
+import ohos_app_cangjie_entry.app.prgghale.roomdb.data.domain.UserProfession
 import ohos_app_cangjie_entry.app.prgghale.roomdb.data.table.ProfessionTable
 import ohos_app_cangjie_entry.app.prgghale.roomdb.data.table.UserTable
 import std.collection.*
@@ -40,5 +41,51 @@ public class AppDatabase {
         nextUserId += 1
         users.add(user)
         return user
+    }
+
+    public func getUserProfession(): ArrayList<UserProfession> {
+        var joined = ArrayList<UserProfession>()
+        for (user in users) {
+            for (profession in professions) {
+                if (user.profession == profession.professionId) {
+                    joined.add(UserProfession(user, profession))
+                }
+            }
+        }
+        return joined
+    }
+
+    public func deleteUser(userId: String): Bool {
+        var index: Int64 = 0
+        while (index < users.size) {
+            if (users[index].id == userId) {
+                users.remove(index .. index)
+                return true
+            }
+            index += 1
+        }
+        return false
+    }
+
+    public func updateFavorite(userId: String, isFavorite: Bool): Bool {
+        var index: Int64 = 0
+        while (index < users.size) {
+            if (users[index].id == userId) {
+                users[index].isFavorite = isFavorite
+                return true
+            }
+            index += 1
+        }
+        return false
+    }
+
+    public func getFavoriteUsers(): ArrayList<UserTable> {
+        var favorites = ArrayList<UserTable>()
+        for (user in users) {
+            if (user.isFavorite) {
+                favorites.add(user)
+            }
+        }
+        return favorites
     }
 }
