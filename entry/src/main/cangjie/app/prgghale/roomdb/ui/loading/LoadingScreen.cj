@@ -5,73 +5,261 @@ import ohos.arkui.state_macro_manage.*
 
 @Component
 public class LoadingScreen {
-    let summaryLabels: Array<String> = ["Users", "Professions", "Joined rows", "Active loaders"]
     @State var userCount: Int64 = 0
     @State var professionCount: Int64 = 0
     @State var userProfessionCount: Int64 = 0
     @State var refreshCount: Int64 = 0
     @State var activeLoaders: Int64 = 0
-    @State var statusMessage: String = "Press refresh to sync counters"
+    @State var isLoading: Bool = false
+    @State var statusMessage: String = "Press Refresh"
 
     private func refreshState(): Unit {
         let viewModel = LoadingViewModel()
+        isLoading = true
+        activeLoaders = 1
+        statusMessage = "Loading observers..."
         let state = viewModel.refresh()
         userCount = state.userCount
         professionCount = state.professionCount
         userProfessionCount = state.userProfessionCount
         refreshCount += 1
         activeLoaders = viewModel.activeLoaders()
-        statusMessage = if (state.isLoading()) { "Refresh completed" } else { "Idle" }
+        isLoading = false
+        statusMessage = if (state.userCount + state.professionCount + state.userProfessionCount > 0) { "Refresh completed" } else { "No data available" }
     }
 
     func build() {
-        Column(space: 14) {
-            Text("Loading Demo")
-                .fontSize(22)
-                .fontWeight(FontWeight.Bold)
+        Scroll() {
+            Column(space: 16) {
+                Row() {
+                    Button("Refresh", ButtonOptions(shape: ButtonType.Capsule))
+                        .fontSize(14)
+                        .fontWeight(FontWeight.Medium)
+                        .backgroundColor(0xFFE5E7EB)
+                        .fontColor(0xFF111827)
+                        .onClick({ _ =>
+                            refreshState()
+                        })
+                }
+                .width(100.percent)
+                .justifyContent(FlexAlign.Start)
 
-            Text(statusMessage)
-                .fontSize(14)
+                Column(space: 8) {
+                    Text("Loading state")
+                        .fontSize(18)
+                        .fontWeight(FontWeight.Bold)
+                        .fontColor(0xFF111827)
 
-            List(space: 10, initialIndex: 0) {
-                ForEach(this.summaryLabels, itemGeneratorFunc: { item: String, _: Int64 =>
-                    ListItem() {
-                        Column(space: 6) {
-                            Text(item)
-                                .fontSize(14)
-                            if (item == "Users") {
-                                Text("Count: ${userCount}")
-                                    .fontSize(12)
-                            } else if (item == "Professions") {
-                                Text("Count: ${professionCount}")
-                                    .fontSize(12)
-                            } else if (item == "Joined rows") {
-                                Text("Count: ${userProfessionCount}")
-                                    .fontSize(12)
-                            } else {
-                                Text("Count: ${activeLoaders}")
-                                    .fontSize(12)
+                    Text(statusMessage)
+                        .fontSize(14)
+                        .fontColor(0xFF6B7280)
+
+                    if (isLoading) {
+                        Row(space: 10) {
+                            Row() {
+                                Blank()
                             }
+                            .width(18)
+                            .height(18)
+                            .borderRadius(9)
+                            .backgroundColor(0xFF2563EB)
+
+                            Text("Loading...")
+                                .fontSize(14)
+                                .fontColor(0xFF374151)
                         }
+                        .width(100.percent)
+                        .alignItems(VerticalAlign.Center)
+                    } else {
+                        Column(space: 4) {
+                            Text("Completed")
+                                .fontSize(12)
+                                .fontColor(0xFF6B7280)
+
+                            Text("${refreshCount} refreshes")
+                                .fontSize(16)
+                                .fontWeight(FontWeight.Medium)
+                                .fontColor(0xFF111827)
+                        }
+                        .width(100.percent)
+                        .padding(14)
+                        .borderRadius(16)
+                        .backgroundColor(0xFFF9FAFB)
                     }
-                })
+
+                    Row(space: 12) {
+                        Column(space: 4) {
+                            Text("Active loaders")
+                                .fontSize(12)
+                                .fontColor(0xFF6B7280)
+
+                            Text("${activeLoaders}")
+                                .fontSize(16)
+                                .fontWeight(FontWeight.Medium)
+                                .fontColor(0xFF111827)
+                        }
+                        .layoutWeight(1)
+                        .padding(14)
+                        .borderRadius(16)
+                        .backgroundColor(0xFFF9FAFB)
+
+                        Column(space: 4) {
+                            Text("Observed count")
+                                .fontSize(12)
+                                .fontColor(0xFF6B7280)
+
+                            Text("${userCount + professionCount + userProfessionCount}")
+                                .fontSize(16)
+                                .fontWeight(FontWeight.Medium)
+                                .fontColor(0xFF111827)
+                        }
+                        .layoutWeight(1)
+                        .padding(14)
+                        .borderRadius(16)
+                        .backgroundColor(0xFFF9FAFB)
+                    }
+                    .width(100.percent)
+                }
+                .width(100.percent)
+                .padding(16)
+                .borderRadius(18)
+                .backgroundColor(Color.White)
+
+                Text("User observer")
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(0xFF111827)
+                    .width(100.percent)
+                    .padding(left: 4, right: 4, top: 6, bottom: 2)
+
+                Column(space: 6) {
+                    Text("Users")
+                        .fontSize(16)
+                        .fontWeight(FontWeight.Medium)
+                        .fontColor(0xFF111827)
+
+                    Text("Count: ${userCount}")
+                        .fontSize(14)
+                        .fontColor(0xFF2563EB)
+
+                    Text("User rows loaded from repository")
+                        .fontSize(12)
+                        .fontColor(0xFF6B7280)
+                }
+                .width(100.percent)
+                .padding(16)
+                .borderRadius(18)
+                .backgroundColor(Color.White)
+
+                Text("Profession observer")
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(0xFF111827)
+                    .width(100.percent)
+                    .padding(left: 4, right: 4, top: 6, bottom: 2)
+
+                Column(space: 6) {
+                    Text("Professions")
+                        .fontSize(16)
+                        .fontWeight(FontWeight.Medium)
+                        .fontColor(0xFF111827)
+
+                    Text("Count: ${professionCount}")
+                        .fontSize(14)
+                        .fontColor(0xFF2563EB)
+
+                    Text("Profession rows loaded from repository")
+                        .fontSize(12)
+                        .fontColor(0xFF6B7280)
+                }
+                .width(100.percent)
+                .padding(16)
+                .borderRadius(18)
+                .backgroundColor(Color.White)
+
+                Text("User profession observer")
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(0xFF111827)
+                    .width(100.percent)
+                    .padding(left: 4, right: 4, top: 6, bottom: 2)
+
+                Column(space: 6) {
+                    Text("User Profession")
+                        .fontSize(16)
+                        .fontWeight(FontWeight.Medium)
+                        .fontColor(0xFF111827)
+
+                    Text("Count: ${userProfessionCount}")
+                        .fontSize(14)
+                        .fontColor(0xFF2563EB)
+
+                    Text("Joined user and profession rows")
+                        .fontSize(12)
+                        .fontColor(0xFF6B7280)
+                }
+                .width(100.percent)
+                .padding(16)
+                .borderRadius(18)
+                .backgroundColor(Color.White)
+
+                Row(space: 12) {
+                    Column(space: 4) {
+                        Text("Users")
+                            .fontSize(12)
+                            .fontColor(0xFF6B7280)
+
+                        Text("${userCount}")
+                            .fontSize(16)
+                            .fontWeight(FontWeight.Medium)
+                            .fontColor(0xFF111827)
+                    }
+                    .layoutWeight(1)
+                    .padding(14)
+                    .borderRadius(16)
+                    .backgroundColor(Color.White)
+
+                    Column(space: 4) {
+                        Text("Professions")
+                            .fontSize(12)
+                            .fontColor(0xFF6B7280)
+
+                        Text("${professionCount}")
+                            .fontSize(16)
+                            .fontWeight(FontWeight.Medium)
+                            .fontColor(0xFF111827)
+                    }
+                    .layoutWeight(1)
+                    .padding(14)
+                    .borderRadius(16)
+                    .backgroundColor(Color.White)
+                }
+                .width(100.percent)
+
+                Column(space: 4) {
+                    Text("User Profession")
+                        .fontSize(12)
+                        .fontColor(0xFF6B7280)
+
+                    Text("${userProfessionCount}")
+                        .fontSize(16)
+                        .fontWeight(FontWeight.Medium)
+                        .fontColor(0xFF111827)
+                }
+                .width(100.percent)
+                .padding(14)
+                .borderRadius(16)
+                .backgroundColor(Color.White)
+
+                Blank()
+                    .height(96)
             }
-            .height(180)
             .width(100.percent)
-            .scrollBar(BarState.Off)
-
-            Button("Refresh", ButtonOptions(shape: ButtonType.Normal))
-                .onClick({ _ =>
-                    refreshState()
-                })
-
-            Text("Refreshes: ${refreshCount}")
-                .fontSize(12)
-
-            Text("Users=${userCount}, Professions=${professionCount}, Joined=${userProfessionCount}")
-                .fontSize(12)
+            .padding(left: 20, right: 20, top: 16, bottom: 0)
         }
-        .padding(left: 24, right: 24, top: 32, bottom: 24)
+        .width(100.percent)
+        .height(100.percent)
+        .backgroundColor(0xFFF9FAFB)
         .onAppear({ =>
             refreshState()
         })

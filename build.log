@@ -1,10 +1,10 @@
-install completed in 0s 38ms
+install completed in 0s 39ms
 > hvigor UP-TO-DATE :entry:default@CangjiePreBuild...  
 > hvigor Disabled :entry:default@PreBuild... 
 > hvigor UP-TO-DATE :entry:default@GenerateCangjieResource...  
 > hvigor Finished :entry:default@GenerateTomlDependencies... after 4 ms 
 > hvigor Finished :entry:SyncCangjieResource... after 1 ms 
-> hvigor BUILD SUCCESSFUL in 1 s 469 ms 
+> hvigor BUILD SUCCESSFUL in 1 s 502 ms 
 > hvigor UP-TO-DATE :entry:default@CangjiePreBuild...  
 > hvigor Disabled :entry:default@PreBuild... 
 > hvigor Finished :entry:default@CreateModuleInfo... after 1 ms 
@@ -28,24 +28,24 @@ install completed in 0s 38ms
 > hvigor UP-TO-DATE :entry:default@ProcessResource...  
 > hvigor UP-TO-DATE :entry:default@GenerateLoaderJson...  
 > hvigor UP-TO-DATE :entry:default@CompileResource...  
-> hvigor Finished :entry:default@CompileArkTS... after 3 ms 
+> hvigor Finished :entry:default@CompileArkTS... after 4 ms 
 > hvigor Finished :entry:default@BuildJS... after 1 ms 
 > hvigor WARN: Warning: field 'profile.build.combined' in '.\cjpm.toml' is experimental, it is unstable and has some limitations, please refer to related documentation for more details
 > hvigor WARN: Warning: field 'profile.build.combined' in '.\cjpm.toml' is experimental, it is unstable and has some limitations, please refer to related documentation for more details
-> hvigor Finished :entry:default@CompileCangjie... after 24 s 216 ms 
-> hvigor Finished :entry:default@ProcessLibs... after 14 ms 
-> hvigor Finished :entry:default@MoveCangjieLibs... after 4 ms 
+> hvigor Finished :entry:default@CompileCangjie... after 25 s 261 ms 
+> hvigor Finished :entry:default@ProcessLibs... after 15 ms 
+> hvigor Finished :entry:default@MoveCangjieLibs... after 8 ms 
 > hvigor Finished :entry:default@ProcessCangjieLibs... after 2 ms 
-> hvigor Finished :entry:default@DoNativeStrip... after 66 ms 
-> hvigor Finished :entry:default@AfterCompileCangjie... after 5 ms 
-> hvigor Finished :entry:default@CacheNativeLibs... after 3 ms 
-> hvigor Finished :entry:default@GeneratePkgModuleJson... after 2 ms 
+> hvigor Finished :entry:default@DoNativeStrip... after 78 ms 
+> hvigor Finished :entry:default@AfterCompileCangjie... after 6 ms 
+> hvigor Finished :entry:default@CacheNativeLibs... after 5 ms 
+> hvigor UP-TO-DATE :entry:default@GeneratePkgModuleJson...  
 > hvigor Finished :entry:default@ProcessCompiledResources... after 1 ms 
-> hvigor Finished :entry:default@PackageHap... after 357 ms 
-> hvigor Finished :entry:default@PackingCheck... after 4 ms 
+> hvigor Finished :entry:default@PackageHap... after 302 ms 
+> hvigor Finished :entry:default@PackingCheck... after 3 ms 
 > hvigor WARN: Will skip sign 'hos_hap'. No signingConfigs profile is configured in current project.
              If needed, configure the signingConfigs in D:\Kotlintranslate\room-db-with-koin-Harmony\build-profile.json5.
-> hvigor Finished :entry:default@SignHap... after 2 ms 
+> hvigor Finished :entry:default@SignHap... after 1 ms 
 > hvigor Finished :entry:default@CollectDebugSymbol... after 1 ms 
 > hvigor Finished :entry:assembleHap... after 1 ms 
-> hvigor BUILD SUCCESSFUL in 26 s 901 ms 
+> hvigor BUILD SUCCESSFUL in 27 s 877 ms 

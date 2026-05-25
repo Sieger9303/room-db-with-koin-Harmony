@@ -10,6 +10,7 @@ import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.NoDataAnimation
 public class UsersScreen {
     
     @State var refreshTick: Int64 = 0
+    @State var favoriteSignature: String = ""
 let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     @State var userCount: Int64 = 0
     @State var pendingDeleteIndex: Int64 = -1
@@ -20,6 +21,29 @@ let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         if (expandedIndex >= userCount) {
             expandedIndex = -1
         }
+        rebuildFavoriteSignature()
+    }
+
+    private func rebuildFavoriteSignature(): Unit {
+        var signature = ""
+        var index: Int64 = 0
+        let count = RoomDbContext.userProfessionCount()
+        while (index < count) {
+            let userId = RoomDbContext.userIdAt(index)
+            let value = if (RoomDbContext.userIsFavoriteAt(index)) { "1" } else { "0" }
+            signature = "${signature}|${userId}:${value}|"
+            index += 1
+        }
+        favoriteSignature = signature
+    }
+
+    private func displayedFavorite(index: Int64): Bool {
+        let userId = RoomDbContext.userIdAt(index)
+        if (userId == "") {
+            return false
+        }
+        let token = "|${userId}:1|"
+        return favoriteSignature.contains(token)
     }
 
 
@@ -94,7 +118,7 @@ private func removeUser(index: Int64): Unit {
                                         if (expandedIndex == item) {
                                             Row(space: 10) {
                                                 Row() {
-                                                    Image(if (RoomDbContext.userIsFavoriteAt(item)) { @r(app.media.ic_star) } else { @r(app.media.ic_favorite_border) }).width(20).height(20).objectFit(ImageFit.Contain).fillColor(if (RoomDbContext.userIsFavoriteAt(item)) { Color(0xFFF59E0B) } else { Color(0xFF6B7280) })
+                                                    Image(if (displayedFavorite(item)) { @r(app.media.ic_star) } else { @r(app.media.ic_favorite_border) }).width(20).height(20).objectFit(ImageFit.Contain).fillColor(if (displayedFavorite(item)) { Color(0xFFF59E0B) } else { Color(0xFF6B7280) })
                                                 }
                                                 .width(32)
                                                 .height(32)

@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bf0bc8f9-92e4-443a-83d2-0beb6db45e4c" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.deveco/cangjie/.cache/index/index.db" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.deveco/cangjie/.cache/index/index.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.log" beforeDir="false" afterPath="$PROJECT_DIR$/build.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/RoomDbContext.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/RoomDbContext.cj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/data/database/AppDatabase.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/data/database/AppDatabase.cj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/composables/Images.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/composables/Images.cj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/composables/LottieAnimation.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/composables/LottieAnimation.cj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/favorite/FavoriteScreen.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/favorite/FavoriteScreen.cj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/favorite/FavoriteScreen.cj.bak_mutation_fix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/favorite/FavoriteScreen.cj.bak_refresh_compile_fix" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/favorite/FavoriteScreen.cj.bak_refresh_ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/loading/LoadingScreen.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/loading/LoadingScreen.cj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/profile/ProfileScreen.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/profile/ProfileScreen.cj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/userlist/UsersScreen.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/app/prgghale/roomdb/ui/userlist/UsersScreen.cj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/cangjie/main_ability.cj" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/cangjie/main_ability.cj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +34,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "127.0.0.1:5555": "5377125241779718715670",
+    "127.0.0.1:5555": "5377125241779720858734",
     "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-05-25T14:18:35.389426400Z\"}",
+    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-05-25T14:54:18.377324100Z\"}",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1"

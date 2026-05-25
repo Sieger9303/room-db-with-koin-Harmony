@@ -329,9 +329,44 @@ public class RoomDbContext {
         return ""
     }
 
+    private static func initialForName(name: String): String {
+        if (name.size <= 0) {
+            return "?"
+        }
+
+        let ch = name[0]
+
+        if (ch == 65 || ch == 97) { return "A" }
+        if (ch == 66 || ch == 98) { return "B" }
+        if (ch == 67 || ch == 99) { return "C" }
+        if (ch == 68 || ch == 100) { return "D" }
+        if (ch == 69 || ch == 101) { return "E" }
+        if (ch == 70 || ch == 102) { return "F" }
+        if (ch == 71 || ch == 103) { return "G" }
+        if (ch == 72 || ch == 104) { return "H" }
+        if (ch == 73 || ch == 105) { return "I" }
+        if (ch == 74 || ch == 106) { return "J" }
+        if (ch == 75 || ch == 107) { return "K" }
+        if (ch == 76 || ch == 108) { return "L" }
+        if (ch == 77 || ch == 109) { return "M" }
+        if (ch == 78 || ch == 110) { return "N" }
+        if (ch == 79 || ch == 111) { return "O" }
+        if (ch == 80 || ch == 112) { return "P" }
+        if (ch == 81 || ch == 113) { return "Q" }
+        if (ch == 82 || ch == 114) { return "R" }
+        if (ch == 83 || ch == 115) { return "S" }
+        if (ch == 84 || ch == 116) { return "T" }
+        if (ch == 85 || ch == 117) { return "U" }
+        if (ch == 86 || ch == 118) { return "V" }
+        if (ch == 87 || ch == 119) { return "W" }
+        if (ch == 88 || ch == 120) { return "X" }
+        if (ch == 89 || ch == 121) { return "Y" }
+        if (ch == 90 || ch == 122) { return "Z" }
+
+        return "?"
+    }
+
     private static func initialsFor(firstName: String, lastName: String): String {
-        let firstInitial = if (firstName.size > 0) { "${firstName[0]}" } else { "?" }
-        let lastInitial = if (lastName.size > 0) { "${lastName[0]}" } else { "?" }
-        return "${firstInitial}${lastInitial}"
+        return "${initialForName(firstName)}${initialForName(lastName)}"
     }
 }
