@@ -75,11 +75,12 @@ public class HomeScreen {
                     chooseNextProfession()
                 })
 
-            Button("Add User", ButtonOptions(shape: ButtonType.Normal))
-                .enabled(canSubmit())
-                .onClick({ _ =>
+             Button("Add User", ButtonOptions(shape: ButtonType.Normal))
+                 .enabled(canSubmit())
+                 .onClick({ _ =>
+                    let addedProfessionName = selectedProfessionName
                     if (RoomDbContext.addUser(firstName, lastName, address, selectedProfessionId)) {
-                        statusMessage = "Added ${firstName} ${lastName} as ${RoomDbContext.defaultProfessionName()}"
+                        statusMessage = "Added ${firstName} ${lastName} as ${addedProfessionName}"
                         firstName = ""
                         lastName = ""
                         address = ""

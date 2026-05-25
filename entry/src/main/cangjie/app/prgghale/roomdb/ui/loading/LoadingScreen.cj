@@ -36,8 +36,23 @@ public class LoadingScreen {
             List(space: 10, initialIndex: 0) {
                 ForEach(this.summaryLabels, itemGeneratorFunc: { item: String, _: Int64 =>
                     ListItem() {
-                        Text(item)
-                            .fontSize(14)
+                        Column(space: 6) {
+                            Text(item)
+                                .fontSize(14)
+                            if (item == "Users") {
+                                Text("Count: ${userCount}")
+                                    .fontSize(12)
+                            } else if (item == "Professions") {
+                                Text("Count: ${professionCount}")
+                                    .fontSize(12)
+                            } else if (item == "Joined rows") {
+                                Text("Count: ${userProfessionCount}")
+                                    .fontSize(12)
+                            } else {
+                                Text("Count: ${activeLoaders}")
+                                    .fontSize(12)
+                            }
+                        }
                     }
                 })
             }
@@ -52,7 +67,13 @@ public class LoadingScreen {
 
             Text("Refreshes: ${refreshCount}")
                 .fontSize(12)
+
+            Text("Users=${userCount}, Professions=${professionCount}, Joined=${userProfessionCount}")
+                .fontSize(12)
         }
         .padding(left: 24, right: 24, top: 32, bottom: 24)
+        .onAppear({ =>
+            refreshState()
+        })
     }
 }
