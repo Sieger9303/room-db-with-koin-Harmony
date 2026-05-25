@@ -2,7 +2,6 @@ package ohos_app_cangjie_entry.app.prgghale.roomdb.ui.profile
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
-import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.UserProfileImg
 
 @Component
 public class ProfileScreen {
@@ -54,49 +53,66 @@ public class ProfileScreen {
     ]
 
     func build() {
-        Column(space: 12) {
-            Row() {
-                UserProfileImg(initials: "PG")
-                Column(space: 8) {
-                    Text("Prachan Ghale")
-                        .fontSize(22)
-                        .fontWeight(FontWeight.Bold)
+        Scroll() {
+            Column(space: 0) {
+                Row() {
+                    Row() {
+                        Text("PG").fontSize(16).fontWeight(FontWeight.Bold).fontColor(Color.White)
+                    }.width(48).height(48).borderRadius(24).backgroundColor(0xFF1D4ED8).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
 
-                    Text("Hello, I am Prachan Ghale. I'm Mobile Application Developer based in kathmandu. I have been developing mobile application for over a year now. I have worked on project which has potential to become very important in user's life which I'm really proud of.")
-                        .fontSize(12)
+                    Column(space: 8) {
+                        Text("Prachan Ghale")
+                            .fontSize(18)
+                            .fontWeight(FontWeight.Bold)
+                            .fontColor(0xFF111827)
+
+                        Text("Hello, I am Prachan Ghale. I'm Mobile Application Developer based in kathmandu. I have been developing mobile application for over a year now. I have worked on project which has potential to become very important in user's life which I'm really proud of.")
+                            .fontSize(12)
+                            .fontColor(0xFF6B7280)
+                    }
+                    .layoutWeight(1)
+                    .margin(left: 12)
                 }
-            }
+                .width(100.percent)
+                .padding(left: 24, right: 24, top: 20, bottom: 20)
 
-            Text("Technologies I Worked With")
-                .fontSize(18)
-                .fontWeight(FontWeight.Medium)
-            List(space: 8, initialIndex: 0) {
+                Text("Technologies I Worked With")
+                    .width(100.percent)
+                    .padding(left: 24, right: 24, top: 16, bottom: 16)
+                    .backgroundColor(Color.White)
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(0xFF111827)
                 ForEach(this.workedWith, itemGeneratorFunc: { item: String, _: Int64 =>
-                    ListItem() {
-                        Text(item)
-                            .fontSize(14)
-                    }
+                    Text(item)
+                        .width(100.percent)
+                        .padding(left: 24, right: 24, top: 12, bottom: 12)
+                        .fontSize(14)
+                        .fontColor(0xFF6B7280)
                 })
-            }
-            .height(240)
-            .width(100.percent)
-            .scrollBar(BarState.Off)
 
-            Text("Tech That Interest's me")
-                .fontSize(18)
-                .fontWeight(FontWeight.Medium)
-            List(space: 8, initialIndex: 0) {
+                Text("Teach That Interest's me")
+                    .width(100.percent)
+                    .padding(left: 24, right: 24, top: 16, bottom: 16)
+                    .backgroundColor(Color.White)
+                    .fontSize(18)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(0xFF111827)
                 ForEach(this.interestedIn, itemGeneratorFunc: { item: String, _: Int64 =>
-                    ListItem() {
-                        Text(item)
-                            .fontSize(14)
-                    }
+                    Text(item)
+                        .width(100.percent)
+                        .padding(left: 24, right: 24, top: 12, bottom: 12)
+                        .fontSize(14)
+                        .fontColor(0xFF6B7280)
                 })
+
+                Blank()
+                    .height(96)
             }
-            .height(320)
             .width(100.percent)
-            .scrollBar(BarState.Off)
         }
-        .padding(left: 24, right: 24, top: 32, bottom: 24)
+        .width(100.percent)
+        .height(100.percent)
+        .backgroundColor(0xFFF9FAFB)
     }
 }

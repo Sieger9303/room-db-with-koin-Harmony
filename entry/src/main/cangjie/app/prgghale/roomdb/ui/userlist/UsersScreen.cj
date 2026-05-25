@@ -2,121 +2,152 @@ package ohos_app_cangjie_entry.app.prgghale.roomdb.ui.userlist
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
+import ohos.resource.*
 import ohos_app_cangjie_entry.app.prgghale.roomdb.RoomDbContext
 import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.NoDataAnimation
-import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.ShowDeleteDialog
-import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.UserProfileImg
-import ohos_app_cangjie_entry.app.prgghale.roomdb.extesion.toastS
 
 @Component
 public class UsersScreen {
     let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     @State var userCount: Int64 = 0
     @State var pendingDeleteIndex: Int64 = -1
-    @State var statusMessage: String = ""
-    @State var refreshTick: Int64 = 0
+    @State var expandedIndex: Int64 = -1
 
     private func refreshUsers(): Unit {
         userCount = RoomDbContext.userProfessionCount()
-    }
-
-    private func toggleFavorite(index: Int64): Unit {
-        if (RoomDbContext.toggleFavoriteAt(index)) {
-            refreshUsers()
-            statusMessage = toastS("Favorite updated")
-        } else {
-            statusMessage = toastS("Failed to update favorite")
-        }
-    }
-
-    private func removeUser(index: Int64): Unit {
-        if (RoomDbContext.deleteUserAt(index)) {
-            refreshUsers()
-            statusMessage = toastS("User deleted")
-            pendingDeleteIndex = -1
-        } else {
-            statusMessage = toastS("Failed to delete user")
+        if (expandedIndex >= userCount) {
+            expandedIndex = -1
         }
     }
 
     func build() {
-        Column(space: 14) {
-            Text("Users List")
-                .fontSize(22)
-                .fontWeight(FontWeight.Bold)
-
-            Text("Saved users: ${userCount}")
-                .fontSize(14)
-
+        Column(space: 12) {
             if (userCount == 0) {
-                NoDataAnimation()
+                Column(space: 12) {
+                    NoDataAnimation()
+                    Text("No registered users yet")
+                        .fontSize(14)
+                        .fontColor(0xFF6B7280)
+                }
+                .width(100.percent)
+                .padding(top: 40)
+                .alignItems(HorizontalAlign.Center)
             } else {
-                List(space: 12, initialIndex: 0) {
+                List(space: 0, initialIndex: 0) {
                     ForEach(this.visibleIndexes, itemGeneratorFunc: { item: Int64, _: Int64 =>
                         ListItem() {
                             if (item < userCount) {
-                                Column(space: 8) {
-                                    Text("User ${item + 1}")
-                                        .fontSize(16)
-                                        .fontWeight(FontWeight.Bold)
-                                    UserProfileImg(initials: RoomDbContext.userInitialsAt(item))
-                                    Text(RoomDbContext.userTitleAt(item))
-                                        .fontSize(15)
-                                    Text("Profession: ${RoomDbContext.userProfessionNameAt(item)}")
-                                        .fontSize(14)
-                                    Text("Address: ${RoomDbContext.userAddressAt(item)}")
-                                        .fontSize(14)
-                                    Text("Favorite state: ${RoomDbContext.userFavoriteLabelAt(item)}")
-                                        .fontSize(14)
-                                    Button("Toggle favorite", ButtonOptions(shape: ButtonType.Normal))
+                                Column(space: 0) {
+                                    Row() {
+                                        Row() {
+                                            Text(RoomDbContext.userInitialsAt(item)).fontSize(16).fontWeight(FontWeight.Bold).fontColor(Color.White)
+                                        }.width(48).height(48).borderRadius(24).backgroundColor(0xFF1D4ED8).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
+
+                                        Column(space: 4) {
+                                            Text(RoomDbContext.userTitleAt(item))
+                                                .fontSize(15)
+                                                .fontWeight(FontWeight.Medium)
+                                                .fontColor(0xFF111827)
+
+                                            Text(RoomDbContext.userProfessionNameAt(item))
+                                                .fontSize(15)
+                                                .fontWeight(FontWeight.Bold)
+                                                .fontColor(0xFF1F2937)
+
+                                            Text(RoomDbContext.userAddressAt(item))
+                                                .fontSize(12)
+                                                .fontColor(0xFF6B7280)
+                                        }
+                                        .layoutWeight(1)
+                                        .margin(left: 12)
+
+                                        if (expandedIndex == item) {
+                                            Row(space: 10) {
+                                                Row() {
+                                                    Image(if (RoomDbContext.userIsFavoriteAt(item)) { @r(app.media.ic_star) } else { @r(app.media.ic_favorite_border) }).width(20).height(20).objectFit(ImageFit.Contain).fillColor(if (RoomDbContext.userIsFavoriteAt(item)) { Color(0xFFF59E0B) } else { Color(0xFF6B7280) })
+                                                }
+                                                .width(32)
+                                                .height(32)
+                                                .justifyContent(FlexAlign.Center)
+                                                .alignItems(VerticalAlign.Center)
+                                                .borderRadius(16)
+                                                .onClick({ _ =>
+                                                    RoomDbContext.toggleFavoriteAt(item)
+                                                    refreshUsers()
+                                                })
+
+                                                Row() {
+                                                    Image(@r(app.media.ic_delete)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFF6B7280))
+                                                }
+                                                .width(32)
+                                                .height(32)
+                                                .justifyContent(FlexAlign.Center)
+                                                .alignItems(VerticalAlign.Center)
+                                                .borderRadius(16)
+                                                .onClick({ _ =>
+                                                    pendingDeleteIndex = item
+                                                })
+                                            }
+                                            .margin(right: 8)
+                                        }
+
+                                        Row() {
+                                            Image(@r(app.media.ic_chevron_right)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFF6B7280))
+                                        }
+                                        .width(28)
+                                        .height(28)
+                                        .justifyContent(FlexAlign.Center)
+                                        .alignItems(VerticalAlign.Center)
                                         .onClick({ _ =>
-                                            toggleFavorite(item)
+                                            expandedIndex = if (expandedIndex == item) { -1 } else { item }
                                         })
-                                    Button("Delete user", ButtonOptions(shape: ButtonType.Normal))
-                                        .onClick({ _ =>
-                                            pendingDeleteIndex = item
-                                        })
-                                }
-                            } else {
-                                Column() {
-                                    Text("")
+                                    }
+                                    .width(100.percent)
+                                    .padding(left: 4, right: 4, top: 14, bottom: 14)
+
+                                    Divider()
+                                        .strokeWidth(1)
+                                        .color(0xFFE5E7EB)
                                 }
                             }
                         }
                     })
                 }
-                .height(360)
                 .width(100.percent)
+                .layoutWeight(1)
                 .scrollBar(BarState.Off)
             }
 
-            Button("Refresh users", ButtonOptions(shape: ButtonType.Normal))
-                .onClick({ _ =>
-                    refreshUsers()
-                    refreshTick += 1
-                })
-
-            if (statusMessage != "") {
-                Text(statusMessage)
-                    .fontSize(12)
-            }
-
-            Text("Refreshes: ${refreshTick}")
-                .fontSize(12)
-
             if (pendingDeleteIndex >= 0) {
-                ShowDeleteDialog()
-                Button("Confirm delete", ButtonOptions(shape: ButtonType.Normal))
-                    .onClick({ _ =>
-                        removeUser(pendingDeleteIndex)
-                    })
-                Button("Cancel delete", ButtonOptions(shape: ButtonType.Normal))
-                    .onClick({ _ =>
-                        pendingDeleteIndex = -1
-                    })
+                Column(space: 12) {
+                    Text("Delete this user?")
+                        .fontSize(14)
+                        .fontWeight(FontWeight.Medium)
+                    Row(space: 10) {
+                        Button("Delete", ButtonOptions(shape: ButtonType.Normal))
+                            .backgroundColor(0xFFDC2626)
+                            .fontColor(Color.White)
+                            .onClick({ _ =>
+                                RoomDbContext.deleteUserAt(pendingDeleteIndex)
+                                pendingDeleteIndex = -1
+                                refreshUsers()
+                            })
+                        Button("Cancel", ButtonOptions(shape: ButtonType.Normal))
+                            .onClick({ _ =>
+                                pendingDeleteIndex = -1
+                            })
+                    }
+                }
+                .width(100.percent)
+                .padding(12)
+                .borderRadius(16)
+                .backgroundColor(Color.White)
             }
         }
-        .padding(left: 24, right: 24, top: 32, bottom: 24)
+        .width(100.percent)
+        .height(100.percent)
+        .padding(left: 20, right: 20, top: 8, bottom: 16)
+        .backgroundColor(0xFFF9FAFB)
         .onAppear({ =>
             refreshUsers()
         })

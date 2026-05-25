@@ -2,76 +2,72 @@ package ohos_app_cangjie_entry.app.prgghale.roomdb.ui.favorite
 
 import kit.ArkUI.*
 import ohos.arkui.state_macro_manage.*
+import ohos.resource.*
 import ohos_app_cangjie_entry.app.prgghale.roomdb.RoomDbContext
 import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.NoDataAnimation
-import ohos_app_cangjie_entry.app.prgghale.roomdb.composables.UserProfileImg
 
 @Component
 public class FavoriteScreen {
     let visibleIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     @State var favoriteCount: Int64 = 0
-    @State var statusMessage: String = "Tap refresh to load favorites"
-    @State var refreshTick: Int64 = 0
 
     private func refreshFavorites(): Unit {
         favoriteCount = RoomDbContext.favoriteUserCount()
-        statusMessage = if (favoriteCount == 0) { "No favorite users saved" } else { "Showing up to two favorite users" }
     }
 
     func build() {
-        Column(space: 14) {
-            Text("Favorite Users")
-                .fontSize(22)
-                .fontWeight(FontWeight.Bold)
-
-            Text("Saved favorites: ${favoriteCount}")
-                .fontSize(14)
-
-            Text(statusMessage)
-                .fontSize(12)
-
+        Column(space: 12) {
             if (favoriteCount == 0) {
-                NoDataAnimation()
+                Column(space: 12) {
+                    NoDataAnimation()
+                    Text("No favorite users yet")
+                        .fontSize(14)
+                        .fontColor(0xFF6B7280)
+                }
+                .width(100.percent)
+                .padding(top: 40)
+                .alignItems(HorizontalAlign.Center)
             } else {
-                List(space: 12, initialIndex: 0) {
+                List(space: 0, initialIndex: 0) {
                     ForEach(this.visibleIndexes, itemGeneratorFunc: { item: Int64, _: Int64 =>
                         ListItem() {
                             if (item < favoriteCount) {
-                                Column(space: 8) {
-                                    Text("Favorite ${item + 1}")
-                                        .fontSize(16)
-                                        .fontWeight(FontWeight.Bold)
-                                    UserProfileImg(initials: RoomDbContext.favoriteUserInitialsAt(item))
-                                    Text(RoomDbContext.favoriteUserTitleAt(item))
-                                        .fontSize(15)
-                                    Text("Profession: ${RoomDbContext.favoriteUserProfessionAt(item)}")
-                                        .fontSize(14)
-                                    Text("Address: ${RoomDbContext.favoriteUserAddressAt(item)}")
-                                        .fontSize(14)
-                                }
-                            } else {
-                                Column() {
-                                    Text("")
+                                Column(space: 0) {
+                                    Row() {
+                                        Row() {
+                                            Text(RoomDbContext.favoriteUserInitialsAt(item)).fontSize(16).fontWeight(FontWeight.Bold).fontColor(Color.White)
+                                        }.width(48).height(48).borderRadius(24).backgroundColor(0xFF1D4ED8).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
+
+                                        Column(space: 4) {
+                                            Text(RoomDbContext.favoriteUserTitleAt(item)).fontSize(15).fontWeight(FontWeight.Medium).fontColor(0xFF111827)
+                                            Text(RoomDbContext.favoriteUserProfessionAt(item)).fontSize(15).fontWeight(FontWeight.Bold).fontColor(0xFF1F2937)
+                                            Text(RoomDbContext.favoriteUserAddressAt(item)).fontSize(12).fontColor(0xFF6B7280)
+                                        }.layoutWeight(1).margin(left: 12)
+
+                                        Row() {
+                                            Image(@r(app.media.ic_star)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFFF59E0B))
+                                        }.width(28).height(28).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
+
+                                        Row() {
+                                            Image(@r(app.media.ic_chevron_right)).width(20).height(20).objectFit(ImageFit.Contain).fillColor(Color(0xFF6B7280))
+                                        }.width(28).height(28).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
+                                    }.width(100.percent).padding(left: 4, right: 4, top: 14, bottom: 14)
+
+                                    Divider().strokeWidth(1).color(0xFFE5E7EB)
                                 }
                             }
                         }
                     })
                 }
-                .height(320)
                 .width(100.percent)
+                .layoutWeight(1)
                 .scrollBar(BarState.Off)
             }
-
-            Button("Refresh favorites", ButtonOptions(shape: ButtonType.Normal))
-                .onClick({ _ =>
-                    refreshFavorites()
-                    refreshTick += 1
-                })
-
-            Text("Refreshes: ${refreshTick}")
-                .fontSize(12)
         }
-        .padding(left: 24, right: 24, top: 32, bottom: 24)
+        .width(100.percent)
+        .height(100.percent)
+        .padding(left: 20, right: 20, top: 8, bottom: 16)
+        .backgroundColor(0xFFF9FAFB)
         .onAppear({ =>
             refreshFavorites()
         })

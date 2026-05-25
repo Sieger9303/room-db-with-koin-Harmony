@@ -8,11 +8,17 @@ public class UserProfileImg {
     @State var initials: String = "U"
 
     func build() {
-        Column() {
+        Row() {
             Text(initials)
                 .fontSize(16)
                 .fontWeight(FontWeight.Bold)
+                .fontColor(Color.White)
         }
-        .padding(left: 14, right: 14, top: 14, bottom: 14)
+        .width(48)
+        .height(48)
+        .borderRadius(24)
+        .backgroundColor(0xFF1D4ED8)
+        .justifyContent(FlexAlign.Center)
+        .alignItems(VerticalAlign.Center)
     }
 }
