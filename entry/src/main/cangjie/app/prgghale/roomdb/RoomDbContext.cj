@@ -151,6 +151,47 @@ public class RoomDbContext {
         return ""
     }
 
+    public static func userInitialsAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return initialsFor(users[index].user.firstName, users[index].user.lastName)
+        }
+        return ""
+    }
+
+    public static func userIdAt(index: Int64): String {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return users[index].user.id
+        }
+        return ""
+    }
+
+    public static func userIsFavoriteAt(index: Int64): Bool {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return users[index].user.isFavorite
+        }
+        return false
+    }
+
+    public static func toggleFavoriteAt(index: Int64): Bool {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            let user = users[index].user
+            return updateFavorite(user.id, !user.isFavorite)
+        }
+        return false
+    }
+
+    public static func deleteUserAt(index: Int64): Bool {
+        let users = userProfession()
+        if (index >= 0 && index < users.size) {
+            return deleteUser(users[index].user.id)
+        }
+        return false
+    }
+
     public static func favoriteUserCount(): Int64 {
         return favoriteUsers().size
     }
@@ -159,6 +200,30 @@ public class RoomDbContext {
         let users = favoriteUsers()
         if (index >= 0 && index < users.size) {
             return users[index].displayName()
+        }
+        return ""
+    }
+
+    public static func favoriteUserAddressAt(index: Int64): String {
+        let users = favoriteUsers()
+        if (index >= 0 && index < users.size) {
+            return users[index].address
+        }
+        return ""
+    }
+
+    public static func favoriteUserProfessionAt(index: Int64): String {
+        let users = favoriteUsers()
+        if (index >= 0 && index < users.size) {
+            return users[index].profession
+        }
+        return ""
+    }
+
+    public static func favoriteUserInitialsAt(index: Int64): String {
+        let users = favoriteUsers()
+        if (index >= 0 && index < users.size) {
+            return initialsFor(users[index].firstName, users[index].lastName)
         }
         return ""
     }
@@ -176,5 +241,81 @@ public class RoomDbContext {
             }
         }
         return count
+    }
+
+    public static func searchTitleAt(query: String, targetIndex: Int64): String {
+        let users = userProfession()
+        var index: Int64 = 0
+        for (item in users) {
+            if (query == "" || item.user.firstName.contains(query)) {
+                if (index == targetIndex) {
+                    return item.user.displayName()
+                }
+                index += 1
+            }
+        }
+        return ""
+    }
+
+    public static func searchProfessionAt(query: String, targetIndex: Int64): String {
+        let users = userProfession()
+        var index: Int64 = 0
+        for (item in users) {
+            if (query == "" || item.user.firstName.contains(query)) {
+                if (index == targetIndex) {
+                    return item.profession.professionName
+                }
+                index += 1
+            }
+        }
+        return ""
+    }
+
+    public static func searchAddressAt(query: String, targetIndex: Int64): String {
+        let users = userProfession()
+        var index: Int64 = 0
+        for (item in users) {
+            if (query == "" || item.user.firstName.contains(query)) {
+                if (index == targetIndex) {
+                    return item.user.address
+                }
+                index += 1
+            }
+        }
+        return ""
+    }
+
+    public static func searchFavoriteLabelAt(query: String, targetIndex: Int64): String {
+        let users = userProfession()
+        var index: Int64 = 0
+        for (item in users) {
+            if (query == "" || item.user.firstName.contains(query)) {
+                if (index == targetIndex) {
+                    return if (item.user.isFavorite) { "Favorite" } else { "Not favorite" }
+                }
+                index += 1
+            }
+        }
+        return ""
+    }
+
+    public static func searchInitialsAt(query: String, targetIndex: Int64): String {
+        let users = userProfession()
+        var index: Int64 = 0
+        for (item in users) {
+            if (query == "" || item.user.firstName.contains(query)) {
+                if (index == targetIndex) {
+                    return initialsFor(item.user.firstName, item.user.lastName)
+                }
+                index += 1
+            }
+        }
+        return ""
+    }
+
+    private static func initialsFor(firstName: String, lastName: String): String {
+        let firstInitial = if (firstName.size > 0) { "${firstName[0]}" } else { "?" }
+        let lastInitial = if (lastName.size > 0) { "${lastName[0]}" } else { "?" }
+        return "${firstInitial}${lastInitial}"
     }
 }
